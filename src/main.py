@@ -3,9 +3,9 @@ from flask import Flask
 from marshmallow.exceptions import ValidationError
 
 from init import db, ma, bcrypt, jwt
-from controllers.cli_controllers import db_commands
-from controllers.auth_controller import auth_bp
-from controllers.card_controller import cards_bp
+# from controllers.cli_controllers import db_commands
+# from controllers.auth_controller import auth_bp
+# from controllers.cart_controller import cart_bp
 
 def create_app():
     app = Flask(__name__)
@@ -22,8 +22,8 @@ def create_app():
     def validation_error(err):
         return {"error": err.messages}, 400
 
-    app.register_blueprint(db_commands)
-    app.register_blueprint(auth_bp)
-    app.register_blueprint(cards_bp)
+    # app.register_blueprint(db_commands)
+    # app.register_blueprint(auth_bp)
+    # app.register_blueprint(cart_bp)
     
     return app
