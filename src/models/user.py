@@ -7,8 +7,9 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String)
     email = db.Column(db.String, nullable = False, unique = True)
-    password = db.Column(db.String, nullable = False)   
+    password = db.Column(db.String, nullable = False)
      
+
     cart = db.relationship("Cart", back_populates = "user")
     
 class UserSchema(ma.Schema):
