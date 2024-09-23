@@ -46,7 +46,7 @@ def login_user():
         # create JWT
         token = create_access_token(identity = str(user.id), expires_delta = timedelta(days = 1))
         # return respons
-        return {"email": user.email, "is_admin": user.is_admin, "token": token}
+        return {"email": user.email, "token": token}
     # Else
     else:
         # respond with error
