@@ -7,18 +7,19 @@ class Cart(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     cost = db.Column(db.Float, nullable = False)
     date = db.Column(db.Date) #Timestamp on cart Creation
+
     order_id = db.Column(db.Integer, db.ForeignKey("orders.id"), nullable = False)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable = False)
 
-    user = db.relationship('User', back_populates='cart')
-    order = db.relationship('Orders', back_populates='cart')
+    user = db.relationship('User', foreign_keys=[user_id], back_populates='cart')
+    orders = db.relationship('Orders',foreign_keys=[order_id], back_populates='cart')
 
 class CartSchema(ma.Schema):
     user = fields.Nested('UserSchema', only = ["id", "name", "email"])  
-    order = fields.Nested('OrdersSchema')
+    orders = fields.Nested('OrdersSchema', only = ["amount"])
 
     class Meta:
-        fields = ("id", "cost", "order_id", "date", "user_id")
+        fields = ("id", "cost", "orders", "date", "user")
         ordered = True
 
 cart_schema = CartSchema()

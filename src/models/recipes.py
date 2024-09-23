@@ -7,7 +7,9 @@ class Recipe(db.Model):
     name = db.Column(db.String(50), nullable = False)
     method = db.Column(db.String(500), nullable = False)
 
-    
+    orders = db.relationship('Orders', back_populates='recipe')
+    recipe_ingredients = db.relationship('Recipe_Ingredients')
+
 class RecipeSchema(ma.Schema):
 
     class Meta:
@@ -15,4 +17,4 @@ class RecipeSchema(ma.Schema):
         ordered = True
 
 recipe_schema = RecipeSchema()
-recipe_schemas = RecipeSchema(Many = True)
+recipe_schemas = RecipeSchema(many = True)

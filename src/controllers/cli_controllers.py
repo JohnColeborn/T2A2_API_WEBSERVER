@@ -4,7 +4,11 @@ from flask import Blueprint
 from init import db, bcrypt
 from models.user import User
 from models.cart import Cart
-# from models.comment import Comment
+from models.orders import Orders
+from models.recipes import Recipe
+from models.ingredients import Ingredients
+from models.prices import Prices
+from models.recipe_ingredients import Recipe_Ingredients
 
 db_commands = Blueprint("db", __name__)
 
@@ -35,21 +39,126 @@ def seed_tables():
         Cart(        
             cost = 34.50,           
             date = date.today(),
-            user = users[0]
+            user = users[0],
+            orders = []
         ),
         Cart(
             cost = 134.50,           
             date = date.today(),
-            user = users[1]
+            user = users[1],
+            orders = []
         ),
         Cart(
             cost = 234.50,           
             date = date.today(),
-            user = users[0]
+            user = users[0],
+            orders = []
         )
     ]
 
     db.session.add_all(cart)   
+
+    orders = [
+        Orders(
+            amount = 5
+        ),
+         Orders(
+            amount = 15
+        ),
+         Orders(
+            amount = 25
+        )
+    ]
+
+    db.session.add_all(orders)
+
+    recipes = [
+        Recipe(
+            name = "Choc Chip Bikky",
+            method = "Take dough, apply yum, cook well, enjoy"
+        ),
+           Recipe(
+            name = "Peanut Bikky",
+            method = "Take dough, apply nuts, cook well, enjoy"
+        ),
+           Recipe(
+            name = "Raisin Bikky",
+            method = "Take dough, apply raisins, cook well, enjoy"
+        )
+    ]
+
+    db.session.add_all(recipes)
+
+    ingredients = [
+        Ingredients(
+            name = "flour",
+            quantity = "1 KG"
+        ),
+        Ingredients(
+            name = "sugar",
+            quantity = "2 KG"
+        ),
+        Ingredients(
+            name = "nuts",
+            quantity = "100 gm"
+        ),
+        Ingredients(
+            name = "raisins",
+            quantity = "150 gm"
+        ),
+        Ingredients(
+            name = "chocolate",
+            quantity = "500 gm"
+        )
+    ]
+
+    db.session.add_all(ingredients)
+
+    prices = [
+        Prices(
+            perweight = "$1.50 / KG",
+            perquantity = "$2 / Each"
+        ),
+            Prices(
+            perweight = "$13.50 / KG"
+        ),
+            Prices(
+            perquantity = "$10 / Each"
+        ),
+            Prices(
+            perweight = "$11.50 / KG",
+            perquantity = "$1 / Each"
+        ),
+            Prices(
+            perweight = "$19.50 / KG",
+            perquantity = "$3 / Each"
+        ),
+    ]
+
+    db.session.add_all(prices)
+
+    recipe_ingredients = [
+        Recipe_Ingredients(
+            quantity = "4 Eggs"
+        ),
+        Recipe_Ingredients(
+            quantity = "100gm Flour"
+        ),
+        Recipe_Ingredients(
+            quantity = "200gm Sugar"
+        ),
+        Recipe_Ingredients(
+            quantity = "400gm Chocolate"
+        ),
+        Recipe_Ingredients(
+            quantity = "200gm Nuts"
+        ),
+        Recipe_Ingredients(
+            quantity = "100gm Raisins"
+        )
+    ]
+    
+    db.session.add_all(recipe_ingredients)
 
     db.session.commit()
 
