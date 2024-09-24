@@ -13,11 +13,11 @@ class Ingredients(db.Model):
     
     # relationships
     orders = db.relationship('Orders', back_populates='ingredients')
-    prices = db.relationship('Prices')
-    recipe_ingredients = db.relationship('Recipe_Ingredients')
+    prices = db.relationship('Prices', back_populates='ingredients')
+    recipe_ingredients = db.relationship('Recipe_Ingredients', back_populates='ingredients')
 
 class IngredientsSchema(ma.Schema):
-    prices_id = fields.Nested('PricesSchema')  
+    prices = fields.Nested('PricesSchema', exclude = ["ingredients"])  
     orders = fields.Nested('OrdersSchema', only = ["amount"])
 
     class Meta:

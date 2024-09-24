@@ -15,7 +15,7 @@ class Cart(db.Model):
 
     # relationships
     user = db.relationship('User', back_populates='cart')
-    orders = db.relationship('Orders', backref=backref("Orders", cascade="all,delete"))
+    orders = db.relationship('Orders', back_populates='cart', cascade="all,delete")
 
 class CartSchema(ma.Schema):
     user = fields.Nested('UserSchema', only = ["id"])  

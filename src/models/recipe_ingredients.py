@@ -5,12 +5,15 @@ class Recipe_Ingredients(db.Model):
     __tablename__ = "recipe_ingredients"
 
     id = db.Column(db.Integer, primary_key = True)
-    ingredients_id = db.Column(db.Integer, db.ForeignKey("ingredients.id"), nullable = False)
-    recipe_id = db.Column(db.Integer, db.ForeignKey("recipe.id"), nullable = False)
     use_quantity = db.Column(db.String)
 
-    recipe = db.relationship('Recipe', foreign_keys=[recipe_id])
-    ingredients = db.relationship('Ingredients', foreign_keys = [ingredients_id])
+    # foreign keys
+    ingredients_id = db.Column(db.Integer, db.ForeignKey("ingredients.id"), nullable = False)
+    recipe_id = db.Column(db.Integer, db.ForeignKey("recipe.id"), nullable = False)
+    
+    # relations
+    recipe = db.relationship('Recipe', back_populates='recipe_ingredients')
+    ingredients = db.relationship('Ingredients', back_populates='recipe_ingredients')
     
 class Recipe_IngredientsSchema(ma.Schema):
     recipe = fields.Nested('RecipeSchema')

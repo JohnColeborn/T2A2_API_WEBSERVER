@@ -7,8 +7,9 @@ class Recipe(db.Model):
     name = db.Column(db.String(50), nullable = False)
     method = db.Column(db.String(500), nullable = False)
 
+    # relations
     orders = db.relationship('Orders', back_populates='recipe')
-    recipe_ingredients = db.relationship('Recipe_Ingredients')
+    recipe_ingredients = db.relationship('Recipe_Ingredients', back_populates='recipe')
 
 class RecipeSchema(ma.Schema):
 
