@@ -35,6 +35,7 @@ def register_user():
 
 
 @auth_bp.route("/login", methods = ["POST"])
+@jwt_required()
 def login_user():
     # Get datas from body of request
     body_data = request.get_json()

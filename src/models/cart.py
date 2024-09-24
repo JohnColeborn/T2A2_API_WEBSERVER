@@ -1,5 +1,6 @@
 from init import db, ma
 from marshmallow import fields
+from sqlalchemy.orm import backref
 
 class Cart(db.Model):
     __tablename__ = "cart"
@@ -9,16 +10,16 @@ class Cart(db.Model):
     date = db.Column(db.Date) #Timestamp on cart Creation
 
     # foreign keys
-    order_id = db.Column(db.Integer, db.ForeignKey("orders.id"), nullable = False)
+    order_id = db.Column(db.Integer, db.ForeignKey("orders.id", ondelete='CASCADE'), nullable = False)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable = False)
 
     # relationships
-    user = db.relationship('User', foreign_keys=[user_id])
-    orders = db.relationship('Orders', foreign_keys=[order_id], back_populates='cart')
+    user = db.relationship('User', back_populates='cart')
+    orders = db.relationship('Orders', backref=backref("Orders", cascade="all,delete"))
 
 class CartSchema(ma.Schema):
     user = fields.Nested('UserSchema', only = ["id"])  
-    orders = fields.Nested('OrdersSchema', only = ["id", "amount"])
+    orders = fields.Nested('OrdersSchema', exclude = ["id", "cart"])
 
     class Meta:
         fields = ("id", "cost", "orders", "date", "user")

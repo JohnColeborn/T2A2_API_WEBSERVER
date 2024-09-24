@@ -9,18 +9,18 @@ class Orders(db.Model):
     
     # foreign keys
     ingredients_id = db.Column(db.Integer, db.ForeignKey("ingredients.id"), nullable = False)
-    recipe_id = db.Column(db.Integer, db.ForeignKey("recipe.id"), nullable = False)
-    cart_id = db.Column(db.Integer, db.ForeignKey("cart.id"), nullable = False)
+    recipe_id = db.Column(db.Integer, db.ForeignKey("recipe.id"), nullable = True)
+    
     
     # relationships
     recipe = db.relationship('Recipe', foreign_keys=[recipe_id])
     ingredients = db.relationship('Ingredients', foreign_keys=[ingredients_id])
-    cart = db.relationship('Cart', foreign_keys=[cart_id], back_populates='orders')
+    cart = db.relationship('Cart', back_populates='orders')
     
 class OrdersSchema(ma.Schema):
     recipe = fields.Nested('RecipeSchema')
     ingredients = fields.Nested('IngredientsSchema')
-    cart = fields.Nested('CartSchema', only =["id"])
+    cart = fields.Nested('CartSchema')
 
     class Meta:
         fields = ("id", "ingredients", "recipe", "cart", "amount")
