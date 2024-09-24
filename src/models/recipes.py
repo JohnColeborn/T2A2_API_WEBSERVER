@@ -13,6 +13,7 @@ class Recipe(db.Model):
 
 class RecipeSchema(ma.Schema):
 
+
     class Meta:
         fields = ("id", "name", "method")
         ordered = True

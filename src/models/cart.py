@@ -1,6 +1,5 @@
 from init import db, ma
 from marshmallow import fields
-from sqlalchemy.orm import backref
 
 class Cart(db.Model):
     __tablename__ = "cart"
@@ -10,19 +9,19 @@ class Cart(db.Model):
     date = db.Column(db.Date) #Timestamp on cart Creation
 
     # foreign keys
-    order_id = db.Column(db.Integer, db.ForeignKey("orders.id", ondelete='CASCADE'), nullable = False)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable = False)
+    order_id = db.Column(db.Integer, db.ForeignKey("orders.id"), nullable = False)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable = False)
 
     # relationships
     user = db.relationship('User', back_populates='cart')
     orders = db.relationship('Orders', back_populates='cart', cascade="all,delete")
 
 class CartSchema(ma.Schema):
-    user = fields.Nested('UserSchema', only = ["id"])  
-    orders = fields.Nested('OrdersSchema', exclude = ["id", "cart"])
+    user = fields.List(fields.Nested('UserSchema', exclude = ["password", "cart"]))
+    orders = fields.List(fields.Nested('OrdersSchema', exclude = ["cart"]))
 
     class Meta:
-        fields = ("id", "cost", "orders", "date", "user")
+        fields = ("id", "cost", "date", "user", "orders")
         ordered = True
 
 cart_schema = CartSchema()

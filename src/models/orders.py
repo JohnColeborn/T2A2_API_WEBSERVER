@@ -13,14 +13,14 @@ class Orders(db.Model):
     
     
     # relationships
-    recipe = db.relationship('Recipe', foreign_keys=[recipe_id])
-    ingredients = db.relationship('Ingredients', foreign_keys=[ingredients_id])
-    cart = db.relationship('Cart', back_populates='orders')
+    recipe = db.relationship('Recipe', back_populates='orders')
+    ingredients = db.relationship('Ingredients', back_populates='orders')
+    cart = db.relationship('Cart', back_populates='orders', cascade="all,delete")
     
 class OrdersSchema(ma.Schema):
-    recipe = fields.Nested('RecipeSchema')
-    ingredients = fields.Nested('IngredientsSchema')
-    cart = fields.Nested('CartSchema')
+    recipe = fields.List(fields.Nested('RecipeSchema', exclude=["orders"]))
+    ingredients = fields.List(fields.Nested('IngredientsSchema', exclude=["orders"]))
+    cart = fields.List(fields.Nested('CartSchema', exclude=["orders"]))
 
     class Meta:
         fields = ("id", "ingredients", "recipe", "cart", "amount")

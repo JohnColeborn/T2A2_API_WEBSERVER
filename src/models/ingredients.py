@@ -17,8 +17,8 @@ class Ingredients(db.Model):
     recipe_ingredients = db.relationship('Recipe_Ingredients', back_populates='ingredients')
 
 class IngredientsSchema(ma.Schema):
-    prices = fields.Nested('PricesSchema', exclude = ["ingredients"])  
-    orders = fields.Nested('OrdersSchema', only = ["amount"])
+    prices = fields.List(fields.Nested('PricesSchema', exclude = ["ingredients"]))
+    orders = fields.List(fields.Nested('OrdersSchema', only = ["amount"]))
 
     class Meta:
         fields = ("id", "name", "quantity","prices","orders")
