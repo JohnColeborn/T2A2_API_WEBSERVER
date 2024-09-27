@@ -89,36 +89,6 @@ def seed_tables():
 
     db.session.add_all(recipes)
 
-    ingredients = [
-        Ingredients(
-            name = "flour",
-            quantity = "1 KG", 
-            prices = 1           
-        ),
-        Ingredients(
-            name = "sugar",
-            quantity = "2 KG",
-            prices = 2
-        ),
-        Ingredients(
-            name = "nuts",
-            quantity = "100 gm",
-            prices = 3
-        ),
-        Ingredients(
-            name = "raisins",
-            quantity = "150 gm",
-            prices = 4
-        ),
-        Ingredients(
-            name = "chocolate",
-            quantity = "500 gm",
-            prices = 5
-        )
-    ]
-
-    db.session.add_all(ingredients)
-
     prices = [
         Prices(
             perweight = "$1.50 / KG",
@@ -147,6 +117,38 @@ def seed_tables():
 
     db.session.add_all(prices)
 
+
+    ingredients = [
+        Ingredients(
+            name = "flour",
+            quantity = "1 KG",             
+            prices = prices[0]          
+        ),
+        Ingredients(
+            name = "sugar",
+            quantity = "2 KG",
+            prices = prices[1]
+        ),
+        Ingredients(
+            name = "nuts",
+            quantity = "100 gm",
+            prices = prices[2]
+        ),
+        Ingredients(
+            name = "raisins",
+            quantity = "150 gm",
+            prices = prices[3]
+        ),
+        Ingredients(
+            name = "chocolate",
+            quantity = "500 gm",
+            prices = prices[4]
+        )
+    ]
+
+    db.session.add_all(ingredients)
+
+   
     recipe_ingredients = [
         Recipe_Ingredients(
             use_quantity = "4 Eggs"
