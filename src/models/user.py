@@ -5,7 +5,7 @@ from marshmallow.validate import Regexp
 class User(db.Model):
     __tablename__ = "user"
     id = db.Column(db.Integer, primary_key = True)
-    name = db.Column(db.String)
+    name = db.Column(db.String, nullable = False)
     email = db.Column(db.String, nullable = False, unique = True)
     password = db.Column(db.String, nullable = False)
      
@@ -25,5 +25,5 @@ class UserSchema(ma.Schema):
 user_schema = UserSchema(exclude=["password"])
 
 
-# to handle a list of user objects
+# to handle a list of user objects, which shouldn't be needed for this API
 users_schema = UserSchema(many = True, exclude=["password"])

@@ -10,7 +10,7 @@ class Orders(db.Model):
     # foreign keys
     ingredients_id = db.Column(db.Integer, db.ForeignKey("ingredients.id"), nullable = False)
     recipe_id = db.Column(db.Integer, db.ForeignKey("recipe.id"), nullable = True)
-    
+    cart_id = db.Column(db.Integer, db.ForeignKey("cart.id"),nullable = False)
     
     # relationships
     recipe = db.relationship('Recipe', back_populates='orders')

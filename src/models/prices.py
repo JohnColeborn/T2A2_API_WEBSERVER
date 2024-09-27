@@ -8,7 +8,7 @@ class Prices(db.Model):
     perweight = db.Column(db.String(50))
     perquantity = db.Column(db.String(50))   
     
-    ingredients = db.relationship('Ingredients', back_populates='prices', cascade='all, delete')
+    ingredients = db.relationship('Ingredients', cascade='all, delete')
 
 class PricesSchema(ma.Schema):
     ingredients = fields.List(fields.Nested('IngredientsSchema', exclude = ["prices"]))  

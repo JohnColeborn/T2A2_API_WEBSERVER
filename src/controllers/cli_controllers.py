@@ -92,23 +92,28 @@ def seed_tables():
     ingredients = [
         Ingredients(
             name = "flour",
-            quantity = "1 KG"
+            quantity = "1 KG", 
+            prices = 1           
         ),
         Ingredients(
             name = "sugar",
-            quantity = "2 KG"
+            quantity = "2 KG",
+            prices = 2
         ),
         Ingredients(
             name = "nuts",
-            quantity = "100 gm"
+            quantity = "100 gm",
+            prices = 3
         ),
         Ingredients(
             name = "raisins",
-            quantity = "150 gm"
+            quantity = "150 gm",
+            prices = 4
         ),
         Ingredients(
             name = "chocolate",
-            quantity = "500 gm"
+            quantity = "500 gm",
+            prices = 5
         )
     ]
 
@@ -117,21 +122,26 @@ def seed_tables():
     prices = [
         Prices(
             perweight = "$1.50 / KG",
-            perquantity = "$2 / Each"
+            perquantity = "$2 / Each",
+            id = 1
         ),
             Prices(
-            perweight = "$13.50 / KG"
+            perweight = "$13.50 / KG",
+            id = 2
         ),
             Prices(
-            perquantity = "$10 / Each"
+            perquantity = "$10 / Each",
+            id = 3
         ),
             Prices(
             perweight = "$11.50 / KG",
-            perquantity = "$1 / Each"
+            perquantity = "$1 / Each",
+            id = 4
         ),
             Prices(
             perweight = "$19.50 / KG",
-            perquantity = "$3 / Each"
+            perquantity = "$3 / Each",
+            id = 5
         ),
     ]
 
@@ -139,22 +149,22 @@ def seed_tables():
 
     recipe_ingredients = [
         Recipe_Ingredients(
-            quantity = "4 Eggs"
+            use_quantity = "4 Eggs"
         ),
         Recipe_Ingredients(
-            quantity = "100gm Flour"
+            use_quantity = "100gm Flour"
         ),
         Recipe_Ingredients(
-            quantity = "200gm Sugar"
+            use_quantity = "200gm Sugar"
         ),
         Recipe_Ingredients(
-            quantity = "400gm Chocolate"
+            use_quantity = "400gm Chocolate"
         ),
         Recipe_Ingredients(
-            quantity = "200gm Nuts"
+            use_quantity = "200gm Nuts"
         ),
         Recipe_Ingredients(
-            quantity = "100gm Raisins"
+            use_quantity = "100gm Raisins"
         )
     ]
     

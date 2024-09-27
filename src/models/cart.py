@@ -9,12 +9,11 @@ class Cart(db.Model):
     date = db.Column(db.Date) #Timestamp on cart Creation
 
     # foreign keys
-    order_id = db.Column(db.Integer, db.ForeignKey("orders.id"), nullable = False)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable = False)
 
     # relationships
     user = db.relationship('User', back_populates='cart')
-    orders = db.relationship('Orders', back_populates='cart', cascade="all,delete")
+    orders = db.relationship('Orders', back_populates='cart')
 
 class CartSchema(ma.Schema):
     user = fields.List(fields.Nested('UserSchema', exclude = ["password", "cart"]))
