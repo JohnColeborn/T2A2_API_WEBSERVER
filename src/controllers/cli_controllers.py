@@ -24,12 +24,12 @@ def seed_tables():
         User(
             name = "Admin",
             email = "admin@email.com",
-            password = bcrypt.generate_password_hash("123456").decode("utf-8"),
+            password = bcrypt.generate_password_hash("123456").decode("utf-8")            
         ), 
         User(
             name = "User A",
             email = "usera@email.com",
-            password = bcrypt.generate_password_hash("123456").decode("utf-8")
+            password = bcrypt.generate_password_hash("123456").decode("utf-8")           
         )
     ]
 
@@ -39,19 +39,19 @@ def seed_tables():
         Cart(        
             cost = 34.50,           
             date = date.today(),
-            user = users[0],
+            users = users[0],
             orders = []
         ),
         Cart(
             cost = 134.50,           
             date = date.today(),
-            user = users[1],
+            users = users[1],
             orders = []
         ),
         Cart(
             cost = 234.50,           
             date = date.today(),
-            user = users[0],
+            users = users[0],
             orders = []
         )
     ]
@@ -154,11 +154,7 @@ def seed_tables():
         )
     ]
 
-    db.session.add_all(orders)
-
-    
-
-    
+    db.session.add_all(orders)    
    
     recipe_ingredients = [
         Recipe_Ingredients(
