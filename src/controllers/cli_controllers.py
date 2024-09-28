@@ -56,38 +56,7 @@ def seed_tables():
         )
     ]
 
-    db.session.add_all(cart)   
-
-    orders = [
-        Orders(
-            amount = 5
-        ),
-         Orders(
-            amount = 15
-        ),
-         Orders(
-            amount = 25
-        )
-    ]
-
-    db.session.add_all(orders)
-
-    recipes = [
-        Recipe(
-            name = "Choc Chip Bikky",
-            method = "Take dough, apply yum, cook well, enjoy"
-        ),
-           Recipe(
-            name = "Peanut Bikky",
-            method = "Take dough, apply nuts, cook well, enjoy"
-        ),
-           Recipe(
-            name = "Raisin Bikky",
-            method = "Take dough, apply raisins, cook well, enjoy"
-        )
-    ]
-
-    db.session.add_all(recipes)
+    db.session.add_all(cart) 
 
     prices = [
         Prices(
@@ -117,7 +86,6 @@ def seed_tables():
 
     db.session.add_all(prices)
 
-
     ingredients = [
         Ingredients(
             name = "flour",
@@ -146,35 +114,90 @@ def seed_tables():
         )
     ]
 
-    db.session.add_all(ingredients)
+    db.session.add_all(ingredients)  
 
+    recipes = [
+        Recipe(
+            name = "Choc Chip Bikky",
+            method = "Take dough, apply yum, cook well, enjoy"
+        ),
+           Recipe(
+            name = "Peanut Bikky",
+            method = "Take dough, apply nuts, cook well, enjoy"
+        ),
+           Recipe(
+            name = "Raisin Bikky",
+            method = "Take dough, apply raisins, cook well, enjoy"
+        )
+    ]
+
+    db.session.add_all(recipes)
+
+    orders = [
+        Orders(
+            amount = 5,
+            ingredients = ingredients[2],
+            recipe = recipes[0],
+            cart = cart[0]
+        ),
+         Orders(
+            amount = 15,
+            ingredients = ingredients[1],
+            recipe = recipes[1],
+            cart = cart[0]
+        ),
+         Orders(
+            amount = 25,
+            ingredients = ingredients[2],
+            recipe = recipes[2],
+            cart = cart[0]
+        )
+    ]
+
+    db.session.add_all(orders)
+
+    
+
+    
    
     recipe_ingredients = [
         Recipe_Ingredients(
-            use_quantity = "4 Eggs"
+            use_quantity = "4 Eggs",
+            recipe = recipes[0],
+            ingredients = ingredients[0]
         ),
         Recipe_Ingredients(
-            use_quantity = "100gm Flour"
+            use_quantity = "100gm Flour",
+            recipe = recipes[1],
+            ingredients = ingredients[1]
         ),
         Recipe_Ingredients(
-            use_quantity = "200gm Sugar"
+            use_quantity = "200gm Sugar",
+            recipe = recipes[2],
+            ingredients = ingredients[2]
         ),
         Recipe_Ingredients(
-            use_quantity = "400gm Chocolate"
+            use_quantity = "400gm Chocolate",
+            recipe = recipes[1],
+            ingredients = ingredients[3]
         ),
         Recipe_Ingredients(
-            use_quantity = "200gm Nuts"
+            use_quantity = "200gm Nuts",
+            recipe = recipes[0],
+            ingredients = ingredients[4]
         ),
         Recipe_Ingredients(
-            use_quantity = "100gm Raisins"
+            use_quantity = "100gm Raisins",
+            recipe = recipes[0],
+            ingredients = ingredients[2]
         )
     ]
     
-    db.session.add_all(recipe_ingredients)
+    db.session.add_all(recipe_ingredients)    
 
     db.session.commit()
 
-    print("User Tables Seeded!")
+    print("Tables Seeded!")
 
 @db_commands.cli.command("drop")
 def drop_tables():
