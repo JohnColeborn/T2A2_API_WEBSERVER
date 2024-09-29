@@ -18,5 +18,4 @@ class RecipeSchema(ma.Schema):
         fields = ("id", "name", "method")
         ordered = True
 
-recipe_schema = RecipeSchema()
-recipe_schemas = RecipeSchema(many = True)
+recipe_schema = RecipeSchema(many = True)

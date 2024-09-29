@@ -23,4 +23,4 @@ class CartSchema(ma.Schema):
         fields = ("id", "cost", "date", "users", "orders")
         ordered = True
 
-cart_schema = CartSchema()
+cart_schema = CartSchema(many = True)

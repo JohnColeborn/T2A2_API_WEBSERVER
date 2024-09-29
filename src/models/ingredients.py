@@ -17,12 +17,11 @@ class Ingredients(db.Model):
     recipe_ingredients = db.relationship('Recipe_Ingredients', back_populates='ingredients')
 
 class IngredientsSchema(ma.Schema):
-    prices = fields.Nested('PricesSchema', exclude = ["ingredients"])
+    prices = fields.Nested('PricesSchema', only = ["id"])
     orders = fields.Nested('OrdersSchema', only = ["amount"])
 
     class Meta:
         fields = ("id", "name", "quantity","prices","orders")
         ordered = True
 
-ingredients_schema = IngredientsSchema()
 ingredients_schemas = IngredientsSchema(many = True)

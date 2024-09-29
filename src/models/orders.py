@@ -18,13 +18,12 @@ class Orders(db.Model):
     cart = db.relationship('Cart', back_populates='orders', cascade="all,delete")
     
 class OrdersSchema(ma.Schema):
-    recipe = fields.List(fields.Nested('RecipeSchema', exclude=["orders"]))
-    ingredients = fields.List(fields.Nested('IngredientsSchema', exclude=["orders"]))
-    cart = fields.List(fields.Nested('CartSchema', exclude=["orders"]))
+    recipe = fields.Nested('RecipeSchema', only=["name"])
+    ingredients = fields.Nested('IngredientsSchema', only=["name"])
+    cart = fields.Nested('CartSchema', exclude=["orders"])
 
     class Meta:
         fields = ("id", "ingredients", "recipe", "cart", "amount")
         ordered = True
 
-orders_schema = OrdersSchema()
-orders_schemas = OrdersSchema(many = True)
+orders_schema = OrdersSchema(many = True)

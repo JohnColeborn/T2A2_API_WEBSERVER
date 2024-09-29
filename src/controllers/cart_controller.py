@@ -12,12 +12,3 @@ def get_all_cart():
     cart = db.session.scalars(stmt)
     return cart_schema.dump(cart)
 
-# /cart/<id> - GET - fetch a specific cart
-@cart_bp.route("/<int:cart_id>")
-def get_a_cart(cart_id):
-    stmt = db.select(Cart).filter_by(id=cart_id)
-    cart = db.session.scalar(stmt)
-    if cart:
-        return cart_schema.dump(cart)
-    else:
-        return {"Error": f"cart with id {cart_id} not found"}, 404

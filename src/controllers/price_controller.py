@@ -12,12 +12,3 @@ def get_all_prices():
     prices = db.session.scalars(stmt)
     return prices_schema.dump(prices)
 
-# /prices/<id> - GET - fetch a specific prices
-@prices_bp.route("/<int:prices_id>")
-def get_a_prices(prices_id):
-    stmt = db.select(Prices).filter_by(id=prices_id)
-    prices = db.session.scalar(stmt)
-    if prices:
-        return prices_schema.dump(prices)
-    else:
-        return {"Error": f"prices with id {prices_id} not found"}, 404

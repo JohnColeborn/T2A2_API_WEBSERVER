@@ -8,6 +8,9 @@ from controllers.auth_controller import auth_bp
 from controllers.cart_controller import cart_bp
 from controllers.price_controller import prices_bp
 from controllers.ingredients_controller import ingredients_bp
+from controllers.recipe_ingredients_controller import recipe_ingredients_bp
+from controllers.orders_controller import orders_bp
+from controllers.recipe_controller import recipe_bp
 
 def create_app():
     app = Flask(__name__)
@@ -29,5 +32,8 @@ def create_app():
     app.register_blueprint(cart_bp)
     app.register_blueprint(prices_bp)
     app.register_blueprint(ingredients_bp)
+    app.register_blueprint(recipe_ingredients_bp)
+    app.register_blueprint(orders_bp)
+    app.register_blueprint(recipe_bp)
     
     return app

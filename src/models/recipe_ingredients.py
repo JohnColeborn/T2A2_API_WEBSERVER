@@ -16,12 +16,11 @@ class Recipe_Ingredients(db.Model):
     ingredients = db.relationship('Ingredients', back_populates='recipe_ingredients')
     
 class Recipe_IngredientsSchema(ma.Schema):
-    recipe = fields.List(fields.Nested('RecipeSchema', exclude = ["recipe_ingredients"]))
-    ingredients = fields.List(fields.Nested('IngredientsSchema', exclude = ["recipe_ingredients"]))  
+    recipe = fields.Nested('RecipeSchema', only = ["id","name"])
+    ingredients = fields.Nested('IngredientsSchema', only = ["id", "name"])
 
     class Meta:
         fields = ("id", "ingredients", "recipe","use_quantity")
         ordered = True
 
-recipe_ingredients_schema = Recipe_IngredientsSchema()
-recipe_ingredients_schemas = Recipe_IngredientsSchema(many = True)
+recipe_ingredients_schema = Recipe_IngredientsSchema(many = True)
