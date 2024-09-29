@@ -2,9 +2,9 @@
 ### Github: https://github.com/JohnColeborn/T2A2_API_WEBSERVER
 
 # App Purpose
-This app is designed to aid functionality on an ecommerce site by allowing users to browse products, add them to cart, and remove them from cart. 
+This app is designed to aid functionality on an ecommerce site by allowing tables to populate each other and output to a final table viewable by a user. In this case the 'Cart'. The user is able to register, login, and securely create, modify, and delete their orders. They are also able to view ingredients and prices.
 
-It does this through the use of multiple features based predominantly around 'cart', 'recipes', and 'ingredients'.
+Data supplied by the host integrates tables such as 'prices', 'ingredients' and 'orders' and present them to the user as a collected table 'cart'.
 
 ## Initialised Draft Concept
 This is done utilising Trello and DrawIO:
@@ -82,43 +82,73 @@ The functionalities used include:
 
 
 # Build Database!
-Database is built using 7 models, (cart, ingredients, orders, prices, recipe_ingredients, recipes, user).
+Database is built using 5 models, (cart, ingredients, orders, prices, user).
 
 Modified ERM to show relations:
 
-![ERDscreenshot](/docs/entity(11).png)
+![ERDscreenshot](/docs/finalEntity.png)
 
 
 # Post-Code commenced explanation of relations
 Tasks are allocated in the following format:
     
- User: Register user, Once registered the user can > Login
+Register user, through the use of 'POST', data is supplied by the user and passed to the server in the body of the request.  Once registered the user can > Login
 
 ![insomniaregister](/docs/register.png)
 
 
-User: Login, Once logged in the user can > Access Cart
-User: Access Cart, After accessing the Cart the user will be able to see the current order, the ingredients available, the recipes available, and the pricing.
+Login user again requires data from the user, also using 'POST', and will provide the client with a session token to prove they are the authorised user.
 
-Cart: Show Date Created, The cart time stamps to show when it was created
-Cart: Show Total Cost, It will show the total cost of the current order placed in it by accessing > Orders
-Cart: Access Orders, This is the enabler that allows the user to see the current state of ordering from ingredients and recipes.
+![insomnialogin](/docs/login.png)
 
-    Orders: Show Amount Ordered,
-    Orders: Access Recipes,
-    Orders: Access Ingredients,
-    Orders: Access Cart,
+User will then access the cart, through a 'GET' call, and will then be able to see the cost, the date created and confirmation of current user.
 
-    Recipes: Show Name of Recipe,
-    Recipes: Show Name of Method,
+![cart](/docs/cart.png)
 
-    Recipe_Ingredients: Show Quantity of Ingredients Used in Recipe,
-    Recipe_Ingredients: Access Ingredients,
-    Recipe_Ingredients: Access Recipes,
 
-    Ingredients: Show Name of Ingredient,
-    Ingredients: Show Base Quantiy of Ingredient,
-    Ingredients: Access Prices,
+Orders are also accessed through a 'GET' query, this table is the enabler that allows the user to see the current state of ordering from ingredients
 
-    Prices: Show Value Per Weight of Ingredient,
-    Prices: Show Value Per Quantity of Ingredient.
+![orders](/docs/orders.png)
+
+Orders shows :
+- Order ID
+- Ingredients:
+    - Name
+    - Quantity
+    - Prices
+- Amount Ordered
+
+The user is able to delete, create, and modify the orders table through 'DELETE', 'POST' and 'PUT' / 'PATCH', to perform these actions requires JSON inputs in the body, as well as JWT authentication (taken from the login user 'POST').
+
+Here we see 'DELETE', it does not need body data, but it does require the added ID number of the order (/1 in this example) to delete in the link.
+
+![delete](/docs/deleteOrder.png)
+
+Likewise 'PATCH' can be used to modify an existing order, requiring order ID in the link, authentication through JWT, and data in the body.
+
+![modify](/docs/modOrder.png)
+
+To create a new order the user is required to fill the body data with the ingredient id (found in ingredients table), and the amount, it also requires authentication with JWT
+
+![create](/docs/createOrder.png)
+
+Ingredients is pulled through 'GET' to populate Orders
+    
+![ingredients](/docs/ingredients.png)
+
+Ingredients shows:
+- Ingredient ID
+- Ingredient Name
+- Quantity unit per ingredient
+- Prices
+
+Prices is pulled with 'GET' to populate Ingredients
+
+![prices](/docs/prices.png)
+
+Prices: Show Value Per Weight of Ingredient,
+
+Prices: Show Value Per Quantity of Ingredient.
+
+# Best bit of the entire experience:
+![quintessence](/docs/finalTrello.png)    
