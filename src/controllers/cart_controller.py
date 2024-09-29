@@ -1,5 +1,5 @@
-from flask import Blueprint
-
+from flask import Blueprint, request
+from flask_jwt_extended import jwt_required
 from init import db
 from models.cart import Cart, cart_schema
 
@@ -11,4 +11,8 @@ def get_all_cart():
     stmt = db.select(Cart).order_by(Cart.date.desc())
     cart = db.session.scalars(stmt)
     return cart_schema.dump(cart)
+
+
+
+
 
