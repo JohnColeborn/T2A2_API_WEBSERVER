@@ -16,11 +16,16 @@ class Orders(db.Model):
     cart = db.relationship('Cart', back_populates='orders', cascade="all,delete")
     
 class OrdersSchema(ma.Schema): 
-    ingredients = fields.Nested('IngredientsSchema', only=["name","quantity","prices"])
+    ingredients_id = fields.Integer(required=True)  # Explicitly declare ingredients_id as Integer
+    ingredients = fields.Nested('IngredientsSchema', only=["name", "quantity", "prices"])
     
 
     class Meta:
-        fields = ("id", "ingredients", "amount")
+        fields = ("id","ingredients_id", "ingredients", "amount")
         ordered = True
 
-orders_schema = OrdersSchema(many = True)
+# For a single order
+order_schema = OrdersSchema()
+
+# For multiple orders
+orders_schema = OrdersSchema(many=True)
