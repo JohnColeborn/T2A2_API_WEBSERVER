@@ -16,8 +16,8 @@ class Cart(db.Model):
     orders = db.relationship('Orders', back_populates='cart')
 
 class CartSchema(ma.Schema):
-    users = fields.List(fields.Nested('UserSchema', exclude = ["password", "cart"]))
-    orders = fields.List(fields.Nested('OrdersSchema', exclude = ["cart"]))
+    users = fields.Nested('UserSchema', exclude = ["password", "cart"])
+    orders = fields.Nested('OrdersSchema', exclude = ["cart"])
 
     class Meta:
         fields = ("id", "cost", "date", "users", "orders")

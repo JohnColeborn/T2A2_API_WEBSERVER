@@ -11,10 +11,12 @@ class Prices(db.Model):
     ingredients = db.relationship('Ingredients',back_populates='prices', cascade='all, delete')
 
 class PricesSchema(ma.Schema):
-    ingredients = fields.List(fields.Nested('IngredientsSchema', exclude = ["prices"]))  
+    ingredients = fields.List(fields.Nested('IngredientsSchema', exclude = ["prices"]))
 
     class Meta:
         fields = ("id", "perweight", "perquantity")
         ordered = True
 
-prices_schema = PricesSchema()
+
+
+prices_schema = PricesSchema(many = True)

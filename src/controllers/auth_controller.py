@@ -14,19 +14,19 @@ def register_user():
         # GET the data from the body of the request
         body_data = UserSchema().load(request.get_json())
         # Create an instance of the USER model
-        user = User(
+        users = User(
             name = body_data.get("name"),
             email = body_data.get("email")
         )
         # HASH the password
         password = body_data.get("password")
         if password:
-            user.password = bcrypt.generate_password_hash(password).decode("utf-8")
+            users.password = bcrypt.generate_password_hash(password).decode("utf-8")
         # ADD and COMMIT to the DB
-        db.session.add(user)
+        db.session.add(users)
         db.session.commit()
         # Return Acknowledgement
-        return user_schema.dump(user), 201
+        return user_schema.dump(users), 201
     except IntegrityError as err:
         if err.orig.pgcode == errorcodes.NOT_NULL_VIOLATION:
             return {"Error": f"{err.orig.diag.column_name} is Required"}, 400
@@ -35,19 +35,18 @@ def register_user():
 
 
 @auth_bp.route("/login", methods = ["POST"])
-@jwt_required()
 def login_user():
     # Get datas from body of request
     body_data = request.get_json()
     # Find user in DB with email address
     stmt = db.select(User).filter_by(email = body_data.get("email"))
-    user = db.session.scalar(stmt)
+    users = db.session.scalar(stmt)
     # IF user exists and pw is correct
-    if user and bcrypt.check_password_hash(user.password, body_data.get("password")):
+    if users and bcrypt.check_password_hash(users.password, body_data.get("password")):
         # create JWT
-        token = create_access_token(identity = str(user.id), expires_delta = timedelta(days = 1))
+        token = create_access_token(identity = str(users.id), expires_delta = timedelta(days = 1))
         # return respons
-        return {"email": user.email, "token": token}
+        return {"email": users.email, "token": token}
     # Else
     else:
         # respond with error
@@ -63,17 +62,17 @@ def update_user():
     password = body_data.get("password")
     # fetch the user from the db
     stmt = db.select(User).filter_by(id=get_jwt_identity())
-    user = db.session.scalar(stmt)
+    users = db.session.scalar(stmt)
     # if exists:
-    if user:
+    if users:
     #     update the fields as required 
-        user.name = body_data.get("name") or user.name
+        users.name = body_data.get("name") or users.name
         if password:
-            user.password = bcrypt.generate_password_hash(password).decodde("utf-8")
+            users.password = bcrypt.generate_password_hash(password).decodde("utf-8")
     #     commit to the db
         db.session.commit()
     #     return a response
-        return user_schema.dump(user)
+        return user_schema.dump(users)
     # else:
     else:
         # return error response
