@@ -17,7 +17,7 @@ class Cart(db.Model):
 
 class CartSchema(ma.Schema):
     users = fields.Nested('UserSchema', exclude = ["password", "cart"])
-    orders = fields.Nested('OrdersSchema', exclude = ["cart"])
+    orders = fields.Nested('OrdersSchema', only = ["ingredients","recipe","amount"])
 
     class Meta:
         fields = ("id", "cost", "date", "users", "orders")

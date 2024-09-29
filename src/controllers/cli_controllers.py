@@ -137,20 +137,17 @@ def seed_tables():
         Orders(
             amount = 5,
             ingredients = ingredients[2],
-            recipe = recipes[0],
-            cart = cart[0]
+            recipe = recipes[0]
         ),
          Orders(
             amount = 15,
             ingredients = ingredients[1],
-            recipe = recipes[1],
-            cart = cart[0]
+            recipe = recipes[1]           
         ),
          Orders(
             amount = 25,
             ingredients = ingredients[2],
-            recipe = recipes[2],
-            cart = cart[0]
+            recipe = recipes[2]           
         )
     ]
 
