@@ -1,6 +1,7 @@
 from init import db, ma
 from marshmallow import fields
 
+
 class Cart(db.Model):
     __tablename__ = "cart"
 
@@ -17,7 +18,7 @@ class Cart(db.Model):
 
 class CartSchema(ma.Schema):
     users = fields.Nested('UserSchema', exclude = ["password", "cart"])
-    orders = fields.Nested('OrdersSchema', only = ["ingredients","recipe","amount"])
+    orders = fields.Nested('OrdersSchema', only = ["amount", "ingredients"])
 
     class Meta:
         fields = ("id", "cost", "date", "users", "orders")

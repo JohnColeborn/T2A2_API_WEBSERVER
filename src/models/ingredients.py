@@ -13,15 +13,14 @@ class Ingredients(db.Model):
     
     # relationships
     orders = db.relationship('Orders', back_populates='ingredients')
-    prices = db.relationship('Prices', back_populates='ingredients')
-    recipe_ingredients = db.relationship('Recipe_Ingredients', back_populates='ingredients')
+    prices = db.relationship('Prices', back_populates='ingredients')  
 
 class IngredientsSchema(ma.Schema):
-    prices = fields.Nested('PricesSchema', only = ["id"])
-    orders = fields.Nested('OrdersSchema', only = ["amount"])
+    prices = fields.Nested('PricesSchema', only = ["perweight", "perquantity"])
+    
 
     class Meta:
-        fields = ("id", "name", "quantity","prices","orders")
+        fields = ("id", "name", "quantity","prices")
         ordered = True
 
 ingredients_schemas = IngredientsSchema(many = True)
